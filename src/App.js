@@ -12,7 +12,6 @@ import Paper from '@material-ui/core/paper';
 import Grid from  '@material-ui/core/grid';
 import { styled } from '@material-ui/core/styles';
 import { blue } from '@material-ui/core/colors';
-//import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 
 import  DocumentPane  from "./document_pane";
@@ -24,19 +23,12 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-
-
-
-
 const CustomPane = styled(Paper) ({
 
   color: blue,
   padding:5, margin: 20
 
 })
-
-
-
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,20 +41,6 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
 }));
-
-
-  function Pane1() {
-return(
-<CustomPane >
-<Typography  variant="h6">
-          Meetings
-      </Typography>
-      <Divider />
-      <MeetingPane />
-</CustomPane>
-
-)
-}
 
   function Pane2() {
   return(
