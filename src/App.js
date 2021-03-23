@@ -135,7 +135,8 @@ export default function ButtonAppBar() {
           aria-controls="panel4bh-content"
           id="panel4bh-header"
         >
-          <Typography variant="h6">Meeting</Typography>
+          <Typography variant="h6" >Meeting:   </Typography>
+          <Typography variant="h6">Regular concept meeting for WhamBam</Typography>
         </AccordionSummary>
         <AccordionDetails>
         <MeetingPane />
