@@ -13,6 +13,7 @@ import Grid from  '@material-ui/core/grid';
 import { styled } from '@material-ui/core/styles';
 import { blue } from '@material-ui/core/colors';
 import Divider from '@material-ui/core/Divider';
+import Settings from '@material-ui/icons/Settings';
 
 import  DocumentPane  from "./document_pane";
 import  MeetingPane  from "./meetings_pane";
@@ -23,6 +24,8 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import QueuePlayNext from '@material-ui/icons/QueuePlayNext';
+
 //import { suppressDeprecationWarnings } from 'moment';
 
 //import TextField from '@material-ui/core/TextField';
@@ -62,19 +65,6 @@ const useStyles = makeStyles((theme) => ({
     </CustomPane>   )   }
 
 
-
-/*
-export default function App() {
-
-  return(
-
-    <div>
-      <LoginScreen />
-    </div>
-
-  )}
-  */
-
   export default class App extends React.Component {
 
     constructor(props)
@@ -83,7 +73,8 @@ export default function App() {
       this.state = {
         loggedin: false,
         userid: "",
-        meetingid: ""
+        meetingid: "",
+        userrecord: {}
       }      
     }
 
@@ -94,12 +85,12 @@ export default function App() {
 
     setCurrentUserid(useridInput)
     {
-      this.setState({userid: useridInput, loggedin: true})
+      this.setState({userrecord: useridInput, loggedin: true})
     }
 
     clearUserId()
     {
-      this.setState({userid: "", loggedin: false})
+      this.setState({userrecord: {}, loggedin: false})
     }
 
   
@@ -116,19 +107,20 @@ export default function App() {
       {
         return(
           <div>
-          <MainAppScreen />
+          <MainAppScreen userrecord={this.state.userrecord} />
         </div>
         )
       }
     }
-  
 
   }
+
 
 //export default function MainAppScreen() {
 function MainAppScreen() {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
+  
 
   const handleChange = (panel) => (event, isExpanded) => {setExpanded(isExpanded ? panel : false); };
 
@@ -142,20 +134,27 @@ function MainAppScreen() {
           </IconButton>
           <Typography variant="h6" className={classes.title}>
             Share and Meet
-          </Typography>
-          <Button color="inherit">Login</Button>
+          </Typography>         
+
           <MenuItem>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
+          <QueuePlayNext />
+          </MenuItem>
+
+          <Divider orientation="vertical" flexItem />
+
+
+          <MenuItem>
+          <Settings />
+          </MenuItem> 
+
+          <MenuItem>       
           <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+          </MenuItem>
+
+
+        <p>User</p>
         </Toolbar>
+
         </AppBar>
 
 
@@ -166,6 +165,7 @@ function MainAppScreen() {
           id="panel4bh-header"   >
           <Typography variant="h6">Meeting:</Typography>
           <Typography variant="h6" align="right" color="textSecondary">Regular concept meeting for WhamBam</Typography>
+          
         </AccordionSummary>
         <AccordionDetails>
           <MeetingPane />
