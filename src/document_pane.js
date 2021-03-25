@@ -13,6 +13,8 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import DocumentIcon from '@material-ui/icons/InsertDriveFile';
 import VideoIcon from '@material-ui/icons/VoiceChat';
+import FolderIcon from '@material-ui/icons/Folder';
+import HistoryIcon from '@material-ui/icons/History';
 
 
 
@@ -128,14 +130,13 @@ export default function DocumentPane() {
       defaultExpandIcon={<ArrowRightIcon />}
       defaultEndIcon={<div style={{ width: 24 }} />}
     >
-      <StyledTreeItem nodeId="1" labelText="Invitee" labelIcon={SupervisorAccountIcon} />
-      <StyledTreeItem nodeId="2" labelText="Trash" labelIcon={DeleteIcon} />
-      <StyledTreeItem nodeId="3" labelText="Documents" labelIcon={Label}>
+      <StyledTreeItem nodeId="1" labelText="Invitees" labelIcon={SupervisorAccountIcon} />
+      <StyledTreeItem nodeId="3" labelText="Documents" labelIcon={FolderIcon}>
         <StyledTreeItem
           nodeId="5"
           labelText="Documents"
           labelIcon={DocumentIcon}
-          labelInfo="90"
+          labelInfo="14"
           color="#1a73e8"
           bgColor="#e8f0fe"
         />
@@ -143,7 +144,7 @@ export default function DocumentPane() {
           nodeId="6"
           labelText="Videos"
           labelIcon={VideoIcon}
-          labelInfo="2,294"
+          labelInfo="6"
           color="#e3742f"
           bgColor="#fcefe3"
         />
@@ -151,7 +152,7 @@ export default function DocumentPane() {
           nodeId="7"
           labelText="Chat"
           labelIcon={ForumIcon}
-          labelInfo="3,566"
+          labelInfo="66"
           color="#a250f5"
           bgColor="#f3e8fd"
         />
@@ -164,7 +165,7 @@ export default function DocumentPane() {
           bgColor="#e6f4ea"
         />
       </StyledTreeItem>
-      <StyledTreeItem nodeId="4" labelText="History" labelIcon={Label} />
+      <StyledTreeItem nodeId="4" labelText="History" labelIcon={HistoryIcon} />
     </TreeView>
   );
 }

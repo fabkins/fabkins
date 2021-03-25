@@ -2,6 +2,8 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
+import Alert from '@material-ui/lab/Alert';
+
 const axios = require('axios').default;
 
 
@@ -14,7 +16,10 @@ export default class LoginScreen extends React.Component {
 
     constructor(props) {
       super(props);
-      this.state = { username: "fred.flintstone@gmail.com", password:"", authflag:1 };
+      this.state = {
+        username: "fred.flintstone@gmail.com", 
+        password:"", authflag:1,
+        errormsg: "" };
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
       }
@@ -22,7 +27,7 @@ export default class LoginScreen extends React.Component {
     handleChange(event) {
       this.setState({ username: event.state.username, password: event.state.password });
       }
-  
+        
     async handleSubmit(event) {
       event.preventDefault();
      
@@ -34,22 +39,44 @@ export default class LoginScreen extends React.Component {
       let headersParam={ withCredentials: true}
       
       
-      await axios.post("http://localhost:3000/api/login",logincred, headersParam ).then(res => { 
-        //alert(res.status)
-      this.props.cb("sdfsdf")})
-      .catch(fail =>alert(JSON.stringify(fail.response.data)))  // use fail.response.status as well.   Should set the login error value
-      
-      //await axios.get("http://localhost:3000/api/hello", headersParam ).then(res => alert(res.status),fail =>alert("bad"))
-
-    }
+      await axios.post("http://localhost:3000/api/login",logincred, headersParam ).then(res => 
+      { 
+      axios.get("http://localhost:3000/api/getuserdetails", headersParam )
+        .then(res => 
+          { this.props.cb(res.data) } //alert(JSON.stringify(res.data))    
+           ,fail =>{this.setState({errormsg: fail.response.data.msg })})
+    })
+      .catch(error => {
+        if(error.response)
+        {
+          if(error.response.data?.msg)
+              this.setState({errormsg: error.response.data.msg })
+          else
+          {
+              let errmsg="unknown error "+error.response.status;
+              this.setState({errormsg: errmsg})
+          }
+        }
+        else
+        {this.setState({errormsg: "Failed to communicate to server"})}
+      }
+    )  
+  }
      
      
     
     render () {
+
+      let alertmessage="";
+
+      if(this.state.errormsg !== "")      
+          alertmessage=<Alert variant="filled" severity="error">{this.state.errormsg}</Alert>;
+
       return(
       <div >
    <Container maxWidth="sm">
       <form onSubmit={this.handleSubmit} >
+
           <TextField required id="email-input" 
                     fullWidth label="Email" defaultValue="" 
                     margin="normal"
@@ -79,6 +106,8 @@ export default class LoginScreen extends React.Component {
             <Button  color="primary" type="submit"  variant="contained">
               Log in
             </Button>
+            <p />
+            {alertmessage}
           </form>
           </Container>
       </div>
