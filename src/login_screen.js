@@ -2,6 +2,10 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
+const axios = require('axios').default;
+
+
+//import App from './App';
 
 
 
@@ -10,7 +14,7 @@ export default class LoginScreen extends React.Component {
 
     constructor(props) {
       super(props);
-      this.state = { username: "", password:"", authflag:1 };
+      this.state = { username: "fred.flintstone@gmail.com", password:"", authflag:1 };
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
       }
@@ -19,15 +23,27 @@ export default class LoginScreen extends React.Component {
       this.setState({ username: event.state.username, password: event.state.password });
       }
   
-    handleSubmit(event) {
+    async handleSubmit(event) {
       event.preventDefault();
-      if (this.state.username === 'admin@littech.in' && this.state.password === 'secret') {
-      this.props.history.push("/home");
-      } else {
-      alert('Incorrect Credntials!'+this.state.username+' , '+this.state.password);
-      }
+     
+
+      axios.defaults.headers.post['Content-Type'] = 'application/json';
+      let logincred={email: this.state.username ,password: this.state.password}
+      
+      //let headersParam={ withCredentials: true,      headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json', 'Authorization': `${token}`}}
+      let headersParam={ withCredentials: true}
+      
+      
+      await axios.post("http://localhost:3000/api/login",logincred, headersParam ).then(res => { 
+        //alert(res.status)
+      this.props.cb("sdfsdf")})
+      .catch(fail =>alert(JSON.stringify(fail.response.data)))  // use fail.response.status as well.   Should set the login error value
+      
+      //await axios.get("http://localhost:3000/api/hello", headersParam ).then(res => alert(res.status),fail =>alert("bad"))
+
     }
-  
+     
+     
     
     render () {
       return(

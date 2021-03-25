@@ -23,6 +23,7 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+//import { suppressDeprecationWarnings } from 'moment';
 
 //import TextField from '@material-ui/core/TextField';
 //import Input from '@material-ui/core/Input';
@@ -62,74 +63,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-
 /*
-class LoginScreen extends React.Component {
-
-
-  constructor(props) {
-    super(props);
-    this.state = { username: "", password:"", authflag:1 };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-  handleChange(event) {
-    this.setState({ username: event.state.username, password: event.state.password });
-    }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    if (this.state.username == 'admin@littech.in' && this.state.password == 'secret') {
-    this.props.history.push("/home");
-    } else {
-    alert('Incorrect Credntials!'+this.state.username+' , '+this.state.password);
-    }
-  }
-
-  
-  render () {
-    return(
-    <div >
- <Container maxWidth="sm">
-    <form onSubmit={this.handleSubmit} >
-        <TextField required id="email-input" 
-                  fullWidth label="Email" defaultValue="" 
-                  margin="normal"
-                  name="username"
-                  value={this.state.username}
-                  onChange={(event) =>
-                    this.setState({
-                    [event.target.name]: event.target.value,
-                    })}
-                  type="email"
-                  variant="outlined"/>
-        <TextField
-          required id="password-input" 
-          fullWidth
-          label="Password"
-          name="password"
-          value={this.state.password}
-          onChange={(event) =>
-            this.setState({
-            [event.target.name]: event.target.value,
-            })}
-          type="password"
-          autoComplete="current-password"
-          margin="normal"
-          variant="outlined"
-          /> 
-          <Button  color="primary" type="submit"  variant="contained">
-            Log in
-          </Button>
-        </form>
-        </Container>
-    </div>
-  )
-}
-}
-*/
-
 export default function App() {
 
   return(
@@ -139,6 +73,57 @@ export default function App() {
     </div>
 
   )}
+  */
+
+  export default class App extends React.Component {
+
+    constructor(props)
+    {
+      super(props);
+      this.state = {
+        loggedin: false,
+        userid: "",
+        meetingid: ""
+      }      
+    }
+
+    setCurrentMeeting(meetingidInput)
+    {
+      this.setState({meetingid: meetingidInput});
+    }
+
+    setCurrentUserid(useridInput)
+    {
+      this.setState({userid: useridInput, loggedin: true})
+    }
+
+    clearUserId()
+    {
+      this.setState({userid: "", loggedin: false})
+    }
+
+  
+    render() {
+      if(this.state.loggedin === false)
+      {
+      return(
+        <div>
+        <LoginScreen cb={()=>this.setCurrentUserid()} random="hello" />
+      </div>
+      )
+      }
+      else
+      {
+        return(
+          <div>
+          <MainAppScreen />
+        </div>
+        )
+      }
+    }
+  
+
+  }
 
 //export default function MainAppScreen() {
 function MainAppScreen() {
